@@ -7,15 +7,31 @@ class Program
     {
         Console.Write("Paste Amazon Link -> ");
         string url = Console.ReadLine();
-        // Console.WriteLine(url);
-        if (!IsValidUrl(url))
+        
+        // checks to ensure url is not null
+        if (string.IsNullOrWhiteSpace(url))
         {
-            Console.WriteLine("Link is invalid");
+            Console.WriteLine("Please enter a URL.");
+            return;
+        }
+        
+        // Console.WriteLine(url);
+        if (!IsValidAmazonUrl(url))
+        {
+            Console.WriteLine("Not a valid Amazon URL");
+        }
+        else
+        {
+            Console.WriteLine("Valid Amazon URL detected; looking for price... ");
         }
     }
     
-    private static bool IsValidUrl(string url)
+    private static bool IsValidAmazonUrl(string url) // parses url to ensure validity
     {
-        return Uri.TryCreate(url, UriKind.Absolute, out Uri? result) && (result.Scheme == Uri.UriSchemeHttps);
+        // checks that the url is valid in the first place
+        bool validUrl = Uri.TryCreate(url, UriKind.Absolute, out Uri? result) && (result.Scheme == Uri.UriSchemeHttps);
+        // checks for "amazon.com" in url
+        bool validAmazon = validUrl && result.Host.Contains("amazon.com", StringComparison.OrdinalIgnoreCase);
+        return validUrl && validAmazon; // returns both values to ensure both are true
     }
 }
