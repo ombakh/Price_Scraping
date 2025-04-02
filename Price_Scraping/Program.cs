@@ -29,6 +29,15 @@ class Program
 
         string price = await GetPrice(url);
         Console.WriteLine($"Price is {price}");
+        
+        Console.WriteLine("What is your target price for this item -> $");
+        string userTarget = Console.ReadLine();
+        if (!float.TryParse(userTarget, out float targetPrice))
+        {
+            Console.WriteLine("Please enter a valid value.");
+            return;
+        }
+        
     }
     
     private static bool IsValidAmazonUrl(string url) // parses url to ensure validity
