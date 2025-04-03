@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Playwright;
+using Microsoft.Data.Sqlite;
 
 
 namespace Price_Scraping;
@@ -30,13 +31,14 @@ class Program
         string price = await GetPrice(url);
         Console.WriteLine($"Price is {price}");
         
-        Console.WriteLine("What is your target price for this item -> $");
+        Console.Write("What is your target price for this item -> $");
         string userTarget = Console.ReadLine();
         if (!float.TryParse(userTarget, out float targetPrice))
         {
             Console.WriteLine("Please enter a valid value.");
             return;
         }
+        Console.WriteLine($"Got it, we will notify you when it reaches ${targetPrice}!");
         
     }
     
