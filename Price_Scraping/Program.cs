@@ -98,4 +98,25 @@ class Program
         }
         return string.Empty;
     }
+
+    private static void SavePriceData(string title, string price, float targetPrice)
+    {
+        string connectionString = "Data Source=priceData.db";
+
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+            
+            var createTableCommand = connection.CreateCommand();
+            createTableCommand.CommandText = @"CREATE TABLE IF NOT EXISTS priceHistory (
+                                                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                                    Title TEXT NOT NULL,
+                                                    Price TEXT,
+                                                    TargetPrice REAL NOT NULL,
+                                                    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+                                                    );";
+        }
+        
+        
+    }
 }
